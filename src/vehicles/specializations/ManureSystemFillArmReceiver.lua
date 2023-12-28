@@ -72,13 +72,6 @@ function ManureSystemFillArmReceiver:onLoad(savegame)
 
     spec.fillArmOffset = self.xmlFile:getValue("vehicle.manureSystemFillArmReceiver#fillArmOffset", 0)
     spec.fillArmFillUnitIndex = self.xmlFile:getValue("vehicle.manureSystemFillArmReceiver#fillUnitIndex", 1)
-
-    spec = self.spec_fillTriggerVehicle
-
-    if spec.fillTrigger ~= nil then
-        spec.fillTrigger:delete()
-        spec.fillTrigger = nil
-    end
 end
 
 ---@return boolean
