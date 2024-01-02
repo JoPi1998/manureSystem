@@ -128,10 +128,8 @@ function ManureSystemConnectorManager:loadMapData()
     self:loadDefaultConnectorTypes()
     self:loadSharedSets()
 
-    --local orgConnectionHoseManagerDirectory = g_connectionHoseManager.baseDirectory
-    --g_connectionHoseManager.baseDirectory = self.modDirectory
-    --g_connectionHoseManager:loadConnectionHosesFromXML(Utils.getFilename("resources/assets/connectionHoses/connectionHoses.xml", self.modDirectory))
-    --g_connectionHoseManager.baseDirectory = orgConnectionHoseManagerDirectory
+    local connectionHosesFilename = Utils.getFilename("resources/assets/connectionHoses/connectionHoses.xml", self.modDirectory)
+    g_connectionHoseManager:loadConnectionHosesFromXML(connectionHosesFilename, nil, self.modDirectory)
 
     local collisionFilename = Utils.getFilename("resources/collisions/connectorCollision.i3d", self.modDirectory)
     local collisionRoot = g_i3DManager:loadSharedI3DFile(collisionFilename, false, false)

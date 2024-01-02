@@ -66,6 +66,11 @@
         <Shape name="bundle_hoses" translation="-0 -0.003855 0.146359" shapeId="2" castsShadows="true" receiveShadows="true" materialIds="2" clipDistance="300" nodeId="4"/>
       </Shape>
     </TransformGroup>
+    <TransformGroup name="linkableAdapters" collision="false" clipDistance="300" nodeId="10">
+      <Shape name="bundle_adapter" translation="0 0.003855 -0.146359" shapeId="1" castsShadows="true" receiveShadows="true" materialIds="1" clipDistance="300" nodeId="20">
+        <Shape name="bundle_hoses" translation="-0 -0.003855 0.146359" shapeId="2" castsShadows="true" receiveShadows="true" materialIds="2" clipDistance="300" nodeId="40"/>
+      </Shape>
+    </TransformGroup>
     <TransformGroup name="sockets" nodeId="5">
       <Shape name="bundle_socket" shapeId="3" castsShadows="true" receiveShadows="true" materialIds="3" clipDistance="300" nodeId="6">
         <TransformGroup name="referenceNode" translation="0 0.003855 -0.146359" nodeId="7"/>
