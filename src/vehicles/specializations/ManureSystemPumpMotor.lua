@@ -200,22 +200,6 @@ function ManureSystemPumpMotor:onLoad(savegame)
         SpecializationUtil.removeEventListener(self, "onReadUpdateStream", ManureSystemPumpMotor)
         SpecializationUtil.removeEventListener(self, "onWriteUpdateStream", ManureSystemPumpMotor)
         SpecializationUtil.removeEventListener(self, "onRegisterActionEvents", ManureSystemPumpMotor)
-    else
-        if SpecializationUtil.hasSpecialization(Dischargeable, self.specializations) then
-            ManureSystemPumpMotor.disableDischargeable(self)
-        end
-    end
-end
-
----@return void
-function ManureSystemPumpMotor.disableDischargeable(self)
-    local spec_dischargeable = self.spec_dischargeable
-    if spec_dischargeable ~= nil then
-        for _, dischargeNode in ipairs(spec_dischargeable.dischargeNodes) do
-            if dischargeNode.trigger.node ~= nil then
-                removeTrigger(dischargeNode.trigger.node)
-            end
-        end
     end
 end
 
