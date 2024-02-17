@@ -174,7 +174,9 @@ function ManureSystemFillArm:onUpdateTick(dt, isActiveForInput, isActiveForInput
 
         spec.rayCast:clear()
 
-        local isFillArmPumpMode = self:getPumpMode() == ManureSystemPumpMotor.MODE_FILLARM
+        local wasFillArmPumpMode = self:getPumpMode() == ManureSystemPumpMotor.MODE_FILLARM
+        local anyFillArmHitValidTargetObject = false
+
         for _, fillArm in ipairs(spec.fillArms) do
             if fillArm.isRaycastAllowed then
                 local x, y, z = getWorldTranslation(fillArm.node)
@@ -204,6 +206,7 @@ function ManureSystemFillArm:onUpdateTick(dt, isActiveForInput, isActiveForInput
                     local objectFillUnitIndex = object:getFillArmFillUnitIndex()
                     self:setPumpMode(ManureSystemPumpMotor.MODE_FILLARM)
                     self:setPumpTargetObject(object, objectFillUnitIndex)
+                    anyFillArmHitValidTargetObject = true
 
                     if self.isStandalonePump ~= nil and self:isStandalonePump() then
                         local fillType = object:getFillUnitFillType(objectFillUnitIndex)
@@ -212,10 +215,6 @@ function ManureSystemFillArm:onUpdateTick(dt, isActiveForInput, isActiveForInput
                         if sourceObject ~= nil then
                             self:setPumpSourceObject(sourceObject, sourceFillUnitIndex)
                         end
-                    end
-                else
-                    if isFillArmPumpMode then
-                        self:setPumpTargetObject(nil, nil)
                     end
                 end
 
@@ -229,6 +228,10 @@ function ManureSystemFillArm:onUpdateTick(dt, isActiveForInput, isActiveForInput
 
             -- Reset
             fillArm.isRaycastAllowed = true
+        end
+
+        if wasFillArmPumpMode and not anyFillArmHitValidTargetObject then
+            self:setPumpTargetObject(nil, nil)
         end
     end
 end
