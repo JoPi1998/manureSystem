@@ -44,6 +44,8 @@ function ManureSystemConnectors:delete()
                 set:undoSharedSet(self, connector)
                 delete(connector.sharedSetLinkNode)
             end
+
+            ObjectChangeUtil.setObjectChanges(connector.objectChanges, false, self.object)
         end
     end
 
@@ -305,6 +307,10 @@ function ManureSystemConnectors:loadConnectorFromXML(connector, xmlFile, baseKey
         end
     end
 
+    connector.objectChanges = {}
+    ObjectChangeUtil.loadObjectChangeFromXML(xmlFile, baseKey .. ".objectChanges", connector.objectChanges, self.object.components, self.object)
+    ObjectChangeUtil.setObjectChanges(connector.objectChanges, true, self.object)
+
     connector.componentNode = xmlFile:getValue(baseKey .. "#componentNode", self.object.components[1].node, self.object.components, self.object.i3dMappings)
 
     if connector.componentNode == nil or not NodeExtensions.isRigidBody(connector.componentNode) then
@@ -375,6 +381,7 @@ function ManureSystemConnectors.registerConnectorNodeXMLPaths(schema, baseName)
     schema:register(XMLValueType.STRING, baseName .. "#fillTypeCategories", "Supported fill type categories")
     schema:register(XMLValueType.STRING, baseName .. "#fillTypes", "Supported fill types")
     schema:register(XMLValueType.STRING, baseName .. "#limitedPumpDirection", ("Limit the pump direction of a connector to only '%s' or '%s'"):format(ManureSystemPumpMotor.PUMP_DIRECTION_IN_STR, ManureSystemPumpMotor.PUMP_DIRECTION_OUT_STR))
+    ObjectChangeUtil.registerObjectChangesXMLPaths(schema, baseName)
     schema:register(XMLValueType.NODE_INDEX, baseName .. "#componentNode", "Connector component node", "0>")
     SharedSet.registerXMLPaths(schema, baseName .. ".sharedSet")
 end
