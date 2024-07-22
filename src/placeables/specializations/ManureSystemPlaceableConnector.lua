@@ -62,6 +62,7 @@ end
 ---@return void
 function ManureSystemPlaceableConnector.registerXMLPaths(schema, basePath)
     schema:setXMLSpecializationType("ManureSystemPlaceableConnector")
+    schema:register(XMLValueType.BOOL, basePath .. ".manureSystem#hasConnectors", "Enables support for manure system connectors", false)
     ManureSystemConnectors.registerXMLPaths(schema, basePath)
     schema:setXMLSpecializationType()
 end
@@ -75,7 +76,7 @@ end
 function ManureSystemPlaceableConnector:onLoad(savegame)
     local spec = self.spec_manureSystemPlaceableConnector
 
-    spec.isActive = self.xmlFile:getBool("placeable.manureSystem#hasConnectors", false)
+    spec.isActive = self.xmlFile:getValue("placeable.manureSystem#hasConnectors", false)
 
     if spec.isActive then
         spec.connectors = ManureSystemConnectors.new(self, g_currentMission.manureSystem)

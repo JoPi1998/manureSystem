@@ -60,6 +60,7 @@ end
 ---@return void
 function ManureSystemPlaceableFillArmReceiver.registerXMLPaths(schema, basePath)
     schema:setXMLSpecializationType("ManureSystemPlaceableFillArmReceiver")
+    schema:register(XMLValueType.BOOL, basePath .. ".manureSystem#hasFillArmReceiver", "Enables support for manure system fill arm receiver", false)
     schema:register(XMLValueType.FLOAT, basePath .. ".manureSystemFillArmReceiver#fillArmOffset", "Offset for the fill arm interaction", 0)
     schema:register(XMLValueType.BOOL, basePath .. ".manureSystemFillArmReceiver#thicknessEnabled", "Pump material is thickening during time and can be mixed up again", "Fill arm receiver is active")
     schema:setXMLSpecializationType()
@@ -89,7 +90,7 @@ end
 function ManureSystemPlaceableFillArmReceiver:onLoad(savegame)
     local spec = self.spec_manureSystemPlaceableFillArmReceiver
 
-    spec.isActive = self.xmlFile:getBool("placeable.manureSystem#hasFillArmReceiver", false)
+    spec.isActive = self.xmlFile:getValue("placeable.manureSystem#hasFillArmReceiver", false)
     spec.fillArmOffset = self.xmlFile:getValue("placeable.manureSystemFillArmReceiver#fillArmOffset", 0)
     spec.thicknessEnabled = self.xmlFile:getValue("placeable.manureSystemFillArmReceiver#thicknessEnabled", spec.isActive)
 end

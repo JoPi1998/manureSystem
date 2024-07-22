@@ -47,6 +47,7 @@ end
 ---@return void
 function ManureSystemPlaceableMixers.registerXMLPaths(schema, basePath)
     schema:setXMLSpecializationType("ManureSystemPlaceableMixers")
+    schema:register(XMLValueType.BOOL, basePath .. ".manureSystem#hasMixers", "Enables support for manure system mixers", false)
     ManureSystemPlaceableMixers.registerMixerXMLPaths(schema, basePath .. ".manureSystemMixers.mixer(?)")
     schema:setXMLSpecializationType()
 end
@@ -85,7 +86,7 @@ end
 function ManureSystemPlaceableMixers:onLoad(savegame)
     local spec = self.spec_manureSystemPlaceableMixers
 
-    spec.isActive = self.xmlFile:getBool("placeable.manureSystem#hasMixers", false)
+    spec.isActive = self.xmlFile:getValue("placeable.manureSystem#hasMixers", false)
 
     spec.mixers = {}
     spec.activatableByTriggerId = {}
